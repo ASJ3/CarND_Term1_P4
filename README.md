@@ -63,7 +63,7 @@ To demonstrate this step, I will describe how I apply the distortion correction 
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-To try to identify lane lines on the road, I used a combination of Sobel edge detection and filters in the HSL color model. I found out the HSL model (Hue, Saturation, Lightness) instead of the common RGB model, because it was better at differentiating lane lines from the rest of the road. 
+To try to identify lane lines on the road, I used a combination of Sobel edge detection and filters in the HSL color model. I used the HSL model (Hue, Saturation, Lightness) instead of the common RGB model, because it was better at differentiating lane lines from the rest of the road. 
 
 I used numerous examples, with various lighting and road textures, to help me find the parameters that best isolate lane lines. Finally, I turned each image into a binary image to retain only the pixels that are most likely to indicate lane lines (see cells 15-18). See below the results for each type of filter:
 
@@ -76,7 +76,7 @@ I used numerous examples, with various lighting and road textures, to help me fi
 ![alt text][image7]
 
 
-Different filters are better than others for different road condition (e.g. brightness of pavement). For example, the Hue and Saturation filters are pretty good at picking the yellow lane line, whereas lightness is better at recognizing the white bands on the right line (Sobel is good for both lines). Combining the results from the different binary images can sometimes lead to 'noisy' results, with a lot of non-lane pixels picken up by certain filters. Therefore I created a function that only retains a pixel from the binary images if it is present in 2 or more binary images (see cell 23-25). See below an example when all the pixels are kept, or only those with 2 or more validations:
+Different filters are better than others for different road condition (e.g. brightness of pavement). For example, the Hue and Saturation filters are pretty good at picking the yellow lane line, whereas lightness is better at recognizing the white bands on the right line (Sobel is good for both lines). Combining the results from the different binary images can sometimes lead to 'noisy' results, with a lot of non-lane pixels picked up by certain filters. Therefore I created a function that only retains a pixel from the binary images if it is present in 2 or more binary images (see cell 23-25). See below an example when all the pixels are kept, or only those with 2 or more validations:
 
 ![alt text][image8]
 
@@ -124,6 +124,6 @@ I had to experiment a bit with the perspective reference points on the origin pi
 
 Visual improvements are only designed to give a more compelling rendering. The text used for curvature and distance from center could be smoother. The lane color and its transparency could be more appealing. I even saw examples where the middle of the lane was rendered as an additional line.
 
-From a function perspective, I think there are ways to improve finding lane lines. Although I think my current method for validating pixels on binary images does a decent job, I noticed it might be better to give more 'voting power' to a certain filter based on the lane to recognize. By analyzing many images, I noticed that the lightness filter almost always recognize properly right lane markings. Therefore it would make sense to create code that gives it more weight when it comes to recognize the right lane line. The same goes for the saturation filter and the left lane line.
+From a function perspective, I think there are ways to improve finding lane lines. Although I think my current method for validating pixels on binary images does a decent job, I noticed it might be better to give more 'voting power' to a certain filter based on the lane to recognize. By analyzing many images, I noticed that the lightness filter almost always recognizes correctly the right lane markings. Therefore it would make sense to create code that gives it more weight when it comes to recognizing the right lane line. The same goes for the saturation filter and the left lane line.
 
-Finally, I think lane drawing would be improved by averaging the 2nd degree polynomials obtained from previous frames with the polynomials found with the current frame.
+Finally, I think lane drawing would be improved by averaging the 2nd degree polynomials obtained from previous frames with the polynomials found for the current frame.
